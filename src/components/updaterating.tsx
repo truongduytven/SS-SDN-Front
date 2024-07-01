@@ -31,8 +31,8 @@ function UpdateRating({ data, commentId, onSuccess }: UpdateRatingProps) {
   const onSubmit = async (data: z.infer<typeof RatingSchema>) => {
     try {
       const response = await watchAPI.put(`/watches/comments/${commentId}`, data)
-      onSuccess()
       toast.success(response.data.message || 'Rating updated successfully')
+      onSuccess()
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to update rating')
     }

@@ -48,14 +48,14 @@ function Listwatch({ searchQuery, selectedBrand }: Props) {
   return (
     <>
       {filteredWatches.length > 0 ? (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 p-4'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 p-4'>
           {filteredWatches.map((item, index) => (
             <Link key={index} to={`/watches/${item._id}`}>
-              <Card className='shadow-md scale-100 transform transition duration-200 hover:border-primary hover:border-2 hover:scale-110'>
+              <Card className='shadow-md scale-100 transform transition duration-200 hover:border-primary hover:border-2 hover:scale-105'>
                 <CardContent className='flex text-md flex-col aspect-auto items-center justify-center p-3 space-y-4'>
                   <img
-                    src='https://cdn.tgdd.vn/Files/2020/03/11/1241419/c1_1280x960-800-resize.jpg'
-                    className='rounded-md'
+                    src={item.image}
+                    className='rounded-md h-40 w-60 object-cover overflow-hidden'
                   />
                   <div className='flex flex-col w-full space-y-2'>
                     <span className='text-2xl font-bold overflow-hidden'>{item.watchName}</span>

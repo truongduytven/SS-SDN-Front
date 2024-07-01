@@ -11,6 +11,7 @@ import ProtectedRoute from './pages/ProtectedRoute'
 import RegisterPage from './pages/register'
 import AdminRoute from './pages/AdminRoute'
 import Profile from './pages/profile'
+import ProtectedUserRoute from './pages/ProtectUserRoute'
 
 function App() {
   return (
@@ -27,8 +28,10 @@ function App() {
           <Route path='/profile' element={<Profile />} />
         </Route>
       </Route>
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/register' element={<RegisterPage />} />
+      <Route element={<ProtectedUserRoute />}>
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
+      </Route>
       <Route path='*' element={<NotFoundPage />} />
       <Route path='/notfound' element={<NotFoundPage />} />
     </Routes>

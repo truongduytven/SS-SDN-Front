@@ -5,6 +5,6 @@ export const watchSchema = z.object({
     image: z.string().url('Invalid URL'),
     price: z.number().min(1, 'Price must be a positive number'),
     Automatic: z.boolean(),
-    watchDescription: z.string(),
+    watchDescription: z.string().min(1, 'Description is required'),
     brand: z.string().min(1, 'Brand is required'),
   })

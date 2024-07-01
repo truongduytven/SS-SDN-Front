@@ -10,10 +10,9 @@ import { toast } from 'sonner'
 import { watchSchema } from '@/lib/schemas/watch'
 import { Switch } from '../ui/switch'
 import { Label } from '../ui/label'
-import { AlertDialogAction, AlertDialogCancel } from '../ui/alert-dialog'
+import { AlertDialogCancel } from '../ui/alert-dialog'
 import { useEffect, useState } from 'react'
 import { Brand } from '@/types'
-import axios from 'axios'
 import watchAPI from '@/lib/axiosConfig'
 
 type FormData = z.infer<typeof watchSchema>
@@ -40,8 +39,6 @@ function AddWatch({onSuccess} : AddWatchProps) {
       try {
         const response = await watchAPI.get('/brands') // Adjust the URL to your API endpoint
         setBrands(response.data)
-        form.reset()
-        onSuccess()
       } catch (error) {
         toast.error('Failed to fetch brands'), console.log(error)
       }
@@ -50,7 +47,7 @@ function AddWatch({onSuccess} : AddWatchProps) {
   }, [])
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/watches', data)
+      const response = await watchAPI.post('/watches', data)
       onSuccess()
       toast.success(response.data.message || 'Watch added successfully')
     } catch (error: any) {
@@ -70,7 +67,7 @@ function AddWatch({onSuccess} : AddWatchProps) {
                 <span className='w-[30%] font-semibold'>Name of watch</span>
                 <div className='w-[70%]'>
                   <FormControl>
-                    <Input placeholder='watch name' {...field} className='w-full' />
+                    <Input placeholder='input watch name' {...field} className='w-full' />
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -85,7 +82,7 @@ function AddWatch({onSuccess} : AddWatchProps) {
                 <span className='w-[30%] font-semibold'>Image</span>
                 <div className='w-[70%]'>
                   <FormControl>
-                    <Input placeholder='Image' {...field} className='w-full' />
+                    <Input placeholder='input image URL' {...field} className='w-full' />
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -146,7 +143,7 @@ function AddWatch({onSuccess} : AddWatchProps) {
                 <span className='w-[30%] font-semibold'>Description</span>
                 <div className='w-[70%]'>
                   <FormControl>
-                    <Textarea placeholder='watch name' {...field} className='w-full' />
+                    <Textarea placeholder='input description' {...field} className='w-full' />
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -179,11 +176,11 @@ function AddWatch({onSuccess} : AddWatchProps) {
               </FormItem>
             )}
           />
-          <div className='flex justify-end mt-2'>
+          <div className='flex justify-end space-x-4 mt-2'>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>
-            <Button type='submit'>Submit</Button>
-            </AlertDialogAction>
+            {/* <AlertDialogAction> */}
+              <Button className='w-fit' type='submit'>Submit</Button>
+            {/* </AlertDialogAction> */}
           </div>
         </form>
       </Form>

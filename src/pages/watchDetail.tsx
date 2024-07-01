@@ -20,9 +20,9 @@ import watchAPI from '@/lib/axiosConfig'
 import { averageStar } from '@/lib/utils'
 import { Watch } from '@/types'
 import axios from 'axios'
-import { Settings, SquarePen, Star, Trash } from 'lucide-react'
+import { Settings, SquarePen, Star, Trash, Undo2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 function WatchDetail() {
@@ -33,13 +33,19 @@ function WatchDetail() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const selectedWatch = useParams()
   const { user } = useUser()
+  const navigate = useNavigate()
+  
+  
   const fetchWatch = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/api/watches/${selectedWatch.id}`) // Adjust the URL to your API endpoint
-      setWatch(response.data)
+      if(response.data.message.includes('failed') || response.data.message.includes('not found')) {
+        navigate('/notfound')
+      }
+      setWatch(response.data.watch)
       setLoading(false)
-    } catch (err) {
-      setError('Failed to get watch')
+    } catch (err: any) {
+      setError(err.message)
     }
   }
 
@@ -83,10 +89,11 @@ function WatchDetail() {
   if (error) return <p>{error}</p>
   return (
     <Container>
-      <div className='flex flex-col mt-20 space-y-10'>
+      <div className='flex flex-col mt-10 space-y-10'>
+        <Undo2 className='w-8 h-8 cursor-pointer' onClick={() => navigate(-1)} />
         <div className='flex justify-evenly items-center'>
-          <div className='w-[600px] h-[450px] object-cover overflow-hidden'>
-            <img src='https://cdn.tgdd.vn/Files/2020/03/11/1241419/c1_1280x960-800-resize.jpg' className='rounded-md' />
+          <div className='w-1/3 object-cover overflow-hidden'>
+            <img src={watch?.image} className='w-full h-full rounded-md object-cover' />
           </div>
           <div className='w-1/3 flex flex-col space-y-5'>
             <span className='flex items-center text-4xl font-bold'>
@@ -105,7 +112,7 @@ function WatchDetail() {
                 />
               ))}
             </span>
-            {!isAdmin && !isComment && <Formrating onSuccess={handleSuccess} watchId={watch?._id} />}
+            {(!isAdmin && !isComment && user) && <Formrating onSuccess={handleSuccess} watchId={watch?._id} />}
           </div>
         </div>
         <hr></hr>

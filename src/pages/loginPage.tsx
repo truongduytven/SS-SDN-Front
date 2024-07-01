@@ -22,7 +22,6 @@ const LoginPage = () => {
       password: ''
     }
   })
-
   const onSubmit = async (data: FormData) => {
     try {
         const response = await axios.post('http://localhost:3000/api/auth/login', data)
@@ -30,7 +29,7 @@ const LoginPage = () => {
         form.reset()
         fetchUser()
         toast.success('Login successful')
-        navigate('/');
+        navigate(-1)
     } catch {
         toast.error('Failed to login')
     }
@@ -44,7 +43,7 @@ const LoginPage = () => {
         />
       </div>
       <div className='flex w-full items-center justify-center  p-8 lg:w-[50%] '>
-        <div className='flex h-auto w-[50%] flex-col space-y-6'>
+        <div className='flex h-auto w-[50%] flex-col space-y-6 items-center'>
           <div>
             <h1 className="font-['SF Pro Rounded'] tracking-wider select-none text-center text-3xl font-semibold">
               Login to Watch Nature
@@ -95,6 +94,7 @@ const LoginPage = () => {
               </Button>
             </form>
           </Form>
+          <div className='flex justify-center text-sm'>You don't have an account ? <a href='/register' className='ml-2 text-green-600 underline'>Go to Register</a></div>
         </div>
       </div>
     </section>

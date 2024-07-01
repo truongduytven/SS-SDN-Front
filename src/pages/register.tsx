@@ -132,6 +132,7 @@ const RegisterPage = () => {
               </Button>
             </form>
           </Form>
+          <div className='flex justify-center text-sm'>Do you already have an account ? <a href='/login' className='ml-2 text-green-600 underline'>Go to Login</a></div>
         </div>
       </div>
     </section>

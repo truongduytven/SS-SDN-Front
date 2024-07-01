@@ -19,9 +19,10 @@ type FormData = z.infer<typeof watchSchema>
 
 interface UpdateWatchProps {
   watch: Watch
+  onSuccess: () => void
 }
 
-function UpdateWatch({ watch }: UpdateWatchProps) {
+function UpdateWatch({ watch, onSuccess }: UpdateWatchProps) {
   const [brands, setBrands] = useState<Brand[]>([])
   const form = useForm<z.infer<typeof watchSchema>>({
     resolver: zodResolver(watchSchema),
@@ -50,8 +51,11 @@ function UpdateWatch({ watch }: UpdateWatchProps) {
   const onSubmit = async (data: FormData) => {
     try {
       const response = await watchAPI.put(`/watches/${watch._id}`, data)
+      console.log(response)
+      onSuccess()
       toast.success(response.data.message || 'Watch update successfully')
     } catch (error: any) {
+      console.log(error)
       toast.error(error.response?.data?.message || 'Failed to update watch')
     } 
   }
@@ -177,11 +181,11 @@ function UpdateWatch({ watch }: UpdateWatchProps) {
               </FormItem>
             )}
           />
-          <div className='flex justify-end mt-2'>
+          <div className='flex justify-end space-x-4 mt-2'>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>
+            {/* <AlertDialogAction> */}
               <Button type='submit'>Submit</Button>
-            </AlertDialogAction>
+            {/* </AlertDialogAction> */}
           </div>
         </form>
       </Form>

@@ -26,7 +26,6 @@ function Header() {
     logout()
     fetchUser()
     toast.success('Logged out successfully')
-    navigate('/')
   }
   return (
     <header className='w-full shadow-md fixed top-0 z-50 bg-white'>
@@ -76,7 +75,8 @@ function Header() {
             </Link>
           </div>
           {user ? (
-            <div className='flex-1 flex justify-end'>
+            <div className='flex-1 flex justify-end items-center space-x-4'>
+              <strong>Hi, {user.name}!</strong>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <img
@@ -86,8 +86,7 @@ function Header() {
                   />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='w-fit'>
-                  <DropdownMenuLabel className='py-0'>{user.name}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
+                  {/* <DropdownMenuLabel className='py-0'>{user.name}</DropdownMenuLabel> */}
                   <Link to='/profile'>
                     <DropdownMenuItem className='flex justify-start items-center gap-2 cursor-pointer'>
                       <BookUser className='w-5' />

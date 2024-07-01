@@ -8,7 +8,7 @@ interface AdminRouteProps {
   children?: ReactNode;
 }
 
-const AdminRoute: React.FC<AdminRouteProps> = ({ redirectPath = '/login', adminRedirectPath = '/', children }) => {
+const AdminRoute: React.FC<AdminRouteProps> = ({ redirectPath = '/notfound', adminRedirectPath = '/', children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);

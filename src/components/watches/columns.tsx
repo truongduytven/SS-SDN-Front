@@ -60,7 +60,7 @@ export const columns: ColumnDef<Watch>[] = [
     id: "actions",
     // header: () => <div className="text-center">Actions</div>,
     cell: ({ row }) => {
-      return <div className="flex justify-center"><DataRowAction row={row} /></div>
+      return <div className="flex justify-center"><DataRowAction onSuccess={handleSuccess} row={row} /></div>
     }
   }
 ]
